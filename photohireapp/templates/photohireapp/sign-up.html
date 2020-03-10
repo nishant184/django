@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Sign Up{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'photohireapp/css/sign-up.css' %}"> 
+
+
+<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'></script>
+<script>
+    $(document).ready(function(){
+      $('#confirm_password_id').on('change',function(){
+          if ($('#confirm_password_id').val()!=$('#password_id').val()){
+              alert('Password did not match')
+                $('#password_id').val('')
+                $('#confirm_password_id').val('')
+          }
+      })
+
+      $('#submit').on('click', function(e){
+          if($('#firstname').val()=='')
+          {
+              alert('Firstname cannot be blank')
+              e.preventDefault()
+          }
+          else if($('#lastname').val()=='')
+          {
+              alert('Lastname cannot be blank')
+              e.preventDefault()
+          }
+          else if($('#email').val()=='')
+          {
+              alert('Please enter email address')
+              e.preventDefault()
+          }
+      })
+    });
+</script>   
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% block content %}
+<div class="sign-up-contaner">
+    <heade>
+        <title>Sign Up Page </title>
+        <link rel="stylesheet" href="{% static 'photohireapp/css/sign-up.css' %}"> 
+    </head>
+    <style>
+        .sign-up-contaner .sign-up{
+            background:#000 url('/static/photohireapp/images/signbg.jpg') no-repeat center;
+            height: 100vh;
+            background-size: cover;
+        }
+    </style>
+    <div class="sign-up">
+        <div class="form-box">
+            <form action="{% url 'signup' %}" method="POST">
+                <div class="name input-box">
+                    <label for="">First Name</label>
+                    
+                    <input class="inp" id='firstname' name="first_name" type="text">
+                </div>
+                <div class="lastname input-box">
+                    <label for="">Last Name</label>
+                    <input class="inp" id="lastname" name="last_name" type="text">
+                </div>
+                <div class="email input-box">
+                    <label for="">Email</label>
+                    <input class="inp" id="email" name="username" type="email">
+                </div>
+                <div class="gender input-box">
+                    <label for="">I am a:</label>
+                    <div id="userType"> 
+                        <input checked="checked" type="radio" value="customer" class="user_type" name="is_photographer"> Customer
+                        
+                        <input type="radio" value="val2" class="user_type" name="is_photographer"> Photographer
+                    </div>
+                </div>
+                <div class="pass input-box">
+                    <label for="">Password</label>
+                <input class="inp" id='password_id' name='password1' type="password">
+                </div>
+                <div class="pass input-box">
+                    <label for="">Confirm Password</label>
+                    <input class="inp" id="confirm_password_id" name="password2" type="password">
+                </div>
+                <div class="pass input-box">
+                    <input class="submit-btn" id="submit" type="submit" onclick="myFunction()" value="Sign Up">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+<script>
+alert('hiestvsv')
+function myFunction()
+{
+    alert('hi')
+}
+</script>
