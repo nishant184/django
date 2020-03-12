@@ -47,7 +47,7 @@
             <div>
                 <h2>Leave a comment</h2>
             </div>
-            <form method="POST" action="{% url 'user_profile' %}" >
+            <form method="POST" action="{% url 'user_profile' user_data.id %}" >
             {% csrf_token %} 
             <textarea class="com1" name="message"></textarea><br>
             <button class="btncom">Submit</button>  

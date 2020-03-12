@@ -170,10 +170,17 @@ def search(request):
     )
 
 def user_profile(request, user_id):
+    if request.POST:
+        message=request.POST('message')
+        user_id=request.POST('user_id')
+        query=Comment(message=message)   
+        query.user_id=user_id
+        query.save()
 
 
     user_data = Profile.objects.get(id=user_id)
     comment = Comment.objects.all().filter(id=user_id)
+
 
     # Any number between 5 and 15
     n_recommended = random.randint(5,15)
