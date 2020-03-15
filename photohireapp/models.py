@@ -77,6 +77,5 @@ class Social(models.Model):
     youtube_channel = models.CharField(max_length=200, blank=True)
 
 class Comment(models.Model):
-    #id
     message = models.TextField('Message')
     user_id=models.ForeignKey(Profile,on_delete=models.CASCADE)

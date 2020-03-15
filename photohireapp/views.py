@@ -1,6 +1,7 @@
-from django.http import HttpResponse
+from django.http import HttpResponse,HttpResponseRedirect
 from django.shortcuts import render, redirect,reverse
 from .forms import *
+from .models import *
 from django.views.decorators.csrf import csrf_exempt 
 from django.contrib.auth import authenticate,login
 from django.contrib.auth.models import User
@@ -170,16 +171,24 @@ def search(request):
     )
 
 def user_profile(request, user_id):
-    if request.POST:
-        message=request.POST('message')
-        user_id=request.POST('user_id')
-        query=Comment(message=message)   
-        query.user_id=user_id
-        query.save()
+    # if request.POST:
+    #     message=request.POST['message']
+    #     user_id=request.POST['user_id']
+    #     query=Comment(message=message)   
+    #     query.user_id=user_id
+    #     query.save()
 
+    comment_form = CommentForm()
 
+    if request.method == 'POST':
+        comment_form_with_data = CommentForm(request.POST)
+        print(comment_form_with_data)
+        comment_form_with_data.save()
+
+    print("This works")
+    print(user_id)
     user_data = Profile.objects.get(id=user_id)
-    comment = Comment.objects.all().filter(id=user_id)
+    comment = Comment.objects.filter(user_id=user_id)
 
 
     # Any number between 5 and 15
@@ -187,4 +196,10 @@ def user_profile(request, user_id):
 
     # randomly pick 'n_recommended' images from the database
     recommended_images = Images.objects.order_by('?')[:n_recommended]
-    return render(request, 'photohireapp/profile.html', {'user_data':user_data, 'recommended_images':recommended_images, 'n_recommended':n_recommended,'comment':comment})
+    return render(request, 'photohireapp/profile.html', {
+        'user_data':user_data, 
+        'recommended_images':recommended_images, 
+        'n_recommended':n_recommended,
+        'comment': comment,
+        'comment_form': comment_form
+        })
